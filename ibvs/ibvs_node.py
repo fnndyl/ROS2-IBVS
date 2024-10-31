@@ -108,20 +108,20 @@ class OffboardControl(Node):
         msg.timestamp = int(self.get_clock().now().nanoseconds / 1000)
         self.offboard_control_mode_publisher.publish(msg)
 
-    def publish_velocity_setpoint(self, vx, vy, vz) -> None:
+    def publish_velocity_setpoint(self, vx, vy, vz, vyaw) -> None:
         """Publish velocity setpoint without position data"""
-        msg = TrajectorySetpoint
+        msg = TrajectorySetpoint()
         msg.position = np.array([np.nan, np.nan, np.nan]).astype(np.float32)
-        msg.yaw = np.astype(np.nan, np.float32)
+        msg.yaw = float(np.nan)
 
         # Populate velocity setpoints
         msg.velocity = np.array([vx, vy, vz]).astype(np.float32)
-        msg.yawspeed = 0
+        msg.yawspeed = float(vyaw)
 
         # Populate other required parameters
         msg.timestamp = int(self.get_clock().now().nanoseconds / 1000)
-        self.trajectory_setpoint_piblisher.publish(msg)
-        self.get_logger().info(f"Publishing velocty setpoints {[vx, vy, vz]}")
+        self.trajectory_setpoint_publisher.publish(msg)
+        self.get_logger().info(f"Publishing velocty setpoints {[vx, vy, vz, vyaw]}")
 
     def publish_position_setpoint(self, x: float, y: float, z: float):
         """Publish the trajectory setpoint."""
@@ -132,14 +132,6 @@ class OffboardControl(Node):
         self.trajectory_setpoint_publisher.publish(msg)
         self.get_logger().info(f"Publishing position setpoints {[x, y, z]}")
 
-    def takeoff(self):
-        """Take off using MAVLink command to gain altitude before switching to offboard control mode"""
-        # Be aware that param7 = takeoff height, and is *+* despite NED PX4 convention
-        self.publish_vehicle_command(
-            VehicleCommand.VEHICLE_CMD_NAV_TAKEOFF, param7=10000.0
-        )
-        self.get_logger().info("Attempting takeoff")
-
     def vehicle_status_callback(self, msg) -> None:
         """Update status of vehicle in flight"""
         self.vehicle_staus = msg
@@ -149,7 +141,7 @@ class OffboardControl(Node):
         self.publish_offboard_control_heartbeat_signal()
 
         # Create a variable to time state changes - this is very temporary logic
-        if self.state_change_counter < 101:
+        if self.state_change_counter < 2000:
             self.state_change_counter += 1
 
         if self.state_change_counter == 20:
@@ -157,11 +149,18 @@ class OffboardControl(Node):
             sleep(1)
             self.arm()
 
+        vel_switch_count = 200
+
         #if self.vehicle_status.nav_state == VehicleStatus.NAVIGATION_STATE_OFFBOARD:
-        if self.state_change_counter > 20:
+        if self.state_change_counter > 20 and self.state_change_counter < vel_switch_count:
             # Default values correspond to 0,0,self.takeoff_height
             self.publish_position_setpoint(0.0,0.0,self.takeoff_height)
 
+        if self.state_change_counter > 20 and self.state_change_counter < vel_switch_count:
+            self.get_logger().info(f"Velocity control countdown: {self.state_change_counter} < {vel_switch_count}")
+
+        if self.state_change_counter >= vel_switch_count:
+            self.publish_velocity_setpoint(0,0,0,0)
 
 def main(args=None) -> None:
     print('Starting offboard mode node')
