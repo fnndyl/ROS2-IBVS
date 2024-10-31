@@ -22,4 +22,5 @@ def ibvs(pad_im_coord, des_coords, camera_info: CameraInfo):
 
     # Camera intrinsics
     K = camera_info.k
+    print(K)
     
