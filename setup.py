@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'ibvs_node = ibvs.ibvs_node:main'
+            'offboard_node = ibvs.offboard_node:main'
         ],
     },
 )
