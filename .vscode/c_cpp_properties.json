@@ -1,0 +1,40 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/px4_ros_com/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/px4_msgs/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/image_geometry/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/cv_bridge/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/custom_msgs/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/src/aruco/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/src/custom_msgs/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/src/px4-ros2-interface-lib/examples/cpp/modes/fw_attitude/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/src/px4-ros2-interface-lib/examples/cpp/modes/goto/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/src/px4-ros2-interface-lib/examples/cpp/modes/goto_global/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/src/px4-ros2-interface-lib/examples/cpp/modes/manual/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/src/px4-ros2-interface-lib/examples/cpp/modes/mode_with_executor/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/src/px4-ros2-interface-lib/examples/cpp/modes/rtl_replacement/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/src/px4-ros2-interface-lib/examples/cpp/navigation/global_navigation/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/src/px4-ros2-interface-lib/examples/cpp/navigation/local_navigation/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/src/px4-ros2-interface-lib/px4_ros2_cpp/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/src/px4_ros_com/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/src/vision_opencv/cv_bridge/include/**",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/src/vision_opencv/image_geometry/include/**",
+        "/usr/include/**",
+        "/usr/local/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

@@ -1,0 +1,28 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/px4_ros_com/local/lib/python3.10/dist-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/mocap/lib/python3.10/site-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/px4_msgs/local/lib/python3.10/dist-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/opencv_tests/lib/python3.10/site-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/image_geometry/local/lib/python3.10/dist-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/ibvs/lib/python3.10/site-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/cv_bridge/local/lib/python3.10/dist-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/custom_msgs/local/lib/python3.10/dist-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/IBVS/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/px4_ros_com/local/lib/python3.10/dist-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/mocap/lib/python3.10/site-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/px4_msgs/local/lib/python3.10/dist-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/opencv_tests/lib/python3.10/site-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/image_geometry/local/lib/python3.10/dist-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/ibvs/lib/python3.10/site-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/cv_bridge/local/lib/python3.10/dist-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/custom_msgs/local/lib/python3.10/dist-packages",
+        "/home/dylanfanner/ROS2_workspaces/ws_x500/install/IBVS/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
+}
