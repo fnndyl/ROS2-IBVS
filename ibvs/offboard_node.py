@@ -4,6 +4,7 @@ import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy, DurabilityPolicy
 from px4_msgs.msg import OffboardControlMode, TrajectorySetpoint, VehicleCommand, VehicleLocalPosition, VehicleStatus, VehicleLandDetected
+from custom_msgs.msg import VelCmd
 from time import sleep
 import numpy as np
 
@@ -34,24 +35,20 @@ class OffboardControl(Node):
             VehicleCommand, '/fmu/in/vehicle_command', qos
         )
 
-        # Create subscribers
-        #self.vehicle_local_position_subscriber = self.create_subscription(
-        #    VehicleLocalPosition, '/fmu/out/vehicle_local_position', self.vehicle_local_position_callback, qos
-        #)
-
         self.vehicle_status_subscriber = self.create_subscription(
             VehicleStatus, '/fmu/out/vehicle_status', self.vehicle_status_callback, qos
         )
 
-        #self.vehicle_land_subscriber = self.create_subscription(
-        #   VehicleLandDetected, '/fmu/out/vehicle_land_detected', self.vehicle_land_callback, qos
-        #)
+        self.vel_cmd_subscriber = self.create_subscription(
+            VelCmd, '/ibvs_vel_cmd', self.ibvs_vel_cmd_callback, 10
+        )
 
         # Initialize class variables
         self.vehicle_local_position = VehicleLocalPosition()
         self.vehicle_status = VehicleStatus()
         self.takeoff_height = -3.0
         self.state_change_counter = 0
+        self.v_cmd = None
 
         # Create timer to publish control commands
         self.timer = self.create_timer(0.1, self.timer_callback)
@@ -120,7 +117,7 @@ class OffboardControl(Node):
         # Populate other required parameters
         msg.timestamp = int(self.get_clock().now().nanoseconds / 1000)
         self.trajectory_setpoint_publisher.publish(msg)
-        self.get_logger().info(f"Publishing velocty setpoints {[vx, vy, vz, vyaw]}")
+        self.get_logger().info(f"Publishing velocty setpoints {[round(vx,4), round(vy,4), round(vz,4), round(vyaw,4)]}")
 
     def publish_position_setpoint(self, x: float, y: float, z: float):
         """Publish the trajectory setpoint."""
@@ -135,6 +132,9 @@ class OffboardControl(Node):
         """Update status of vehicle in flight"""
         self.vehicle_staus = msg
 
+    def ibvs_vel_cmd_callback(self, msg: VelCmd) -> None:
+        self.v_cmd = msg
+
     def timer_callback(self) -> None:
         """Callback function for the timer - this is where the sausage is made"""
         self.publish_offboard_control_heartbeat_signal()
@@ -148,7 +148,7 @@ class OffboardControl(Node):
             sleep(1)
             self.arm()
 
-        vel_switch_count = 200
+        vel_switch_count = 50
 
         #if self.vehicle_status.nav_state == VehicleStatus.NAVIGATION_STATE_OFFBOARD:
         if self.state_change_counter > 20 and self.state_change_counter < vel_switch_count:
@@ -159,7 +159,7 @@ class OffboardControl(Node):
             self.get_logger().info(f"Velocity control countdown: {self.state_change_counter} < {vel_switch_count}")
 
         if self.state_change_counter >= vel_switch_count:
-            self.publish_velocity_setpoint(0,0,0,0)
+            self.publish_velocity_setpoint(-self.v_cmd.vx, -self.v_cmd.vy, self.v_cmd.vz, 0)
 
 def main(args=None) -> None:
     print('Starting offboard mode node')

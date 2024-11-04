@@ -124,16 +124,11 @@ class IBVSNode(Node):
                                 [-offset, -offset],
                                 [+offset, -offset],
                                 [+offset, +offset]]) + np.array([u0, v0])
-        print("Goal Points:")
-        print(goal_points)
 
         curr_points = np.array([[pad_im_coord.p1.x, pad_im_coord.p1.y],
                                 [pad_im_coord.p2.x, pad_im_coord.p2.y],
                                 [pad_im_coord.p3.x, pad_im_coord.p3.y],
                                 [pad_im_coord.p4.x, pad_im_coord.p4.y]])
-        
-        print("Current Points:")
-        print(curr_points)
 
         # Create image Jacobian 
         J = np.zeros([2*4, 4])
