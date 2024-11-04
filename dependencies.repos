@@ -1,0 +1,5 @@
+repositories:
+	aruco:
+		type: git
+		url: http://github.com/fnndyl/aruco.git
+		version: main
